@@ -145,6 +145,9 @@ pytest
 - **Shadcn CLI** was not used here because the remote init registry was unavailable in this environment; UI matches the **shadcn + Radix** patterns via hand-rolled components under `components/ui/`.
 - **Deployment** (Railway/Vercel, etc.) is left to you; env vars should live in host secrets, not in git (see `.gitignore`).
 
+## Preview
+<img width="1266" height="2440" alt="SCR-20260507-bbna" src="https://github.com/user-attachments/assets/c19e9dc8-b923-49f2-9041-17832cfd2070" />
+
 ## License
 
 Data © NASA / JPL-Caltech (NeoWs terms apply). This demo project code is provided as-is for learning.
