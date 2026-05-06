@@ -128,7 +128,8 @@ export function AsteroidMissionList({ asteroids, onOpenDetails }: Props) {
                   }
                   width={120}
                   height={96}
-                  className="h-24 w-auto rounded-md object-contain select-none opacity-95"
+                  className="h-24 rounded-md object-contain select-none opacity-95"
+                  style={{ width: "auto", height: "auto" }}
                   priority={false}
                 />
                 <p className="text-center text-sm text-zinc-700">

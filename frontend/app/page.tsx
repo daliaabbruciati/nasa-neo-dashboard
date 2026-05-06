@@ -1,6 +1,7 @@
 "use client";
 
 import { addDays, format } from "date-fns";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { toast } from "sonner";
@@ -29,6 +30,8 @@ import {
 } from "@/hooks/use-asteroids";
 import type { AsteroidSummary } from "@/lib/types";
 
+const ASTEROIDS_PER_PAGE = 6;
+
 export default function Home() {
   const [range, setRange] = useState<DateRange | undefined>(() => {
     const from = new Date();
@@ -42,6 +45,7 @@ export default function Home() {
 
   const [sheetOpen, setSheetOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   const startStr = range?.from ? format(range.from, "yyyy-MM-dd") : "";
   const endStr = range?.to ? format(range.to, "yyyy-MM-dd") : "";
@@ -58,7 +62,15 @@ export default function Home() {
 
   const totalCount = raw?.asteroids.length ?? 0;
   const hazardousCount = raw?.meta.hazardous_count ?? 0;
-  const visibleAsteroids = asteroids.slice(0, 6);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(asteroids.length / ASTEROIDS_PER_PAGE),
+  );
+  const currentPage = Math.min(page, totalPages);
+  const visibleAsteroids = asteroids.slice(
+    (currentPage - 1) * ASTEROIDS_PER_PAGE,
+    currentPage * ASTEROIDS_PER_PAGE,
+  );
 
   useEffect(() => {
     if (!error) return;
@@ -70,6 +82,26 @@ export default function Home() {
   const handleRowClick = (row: AsteroidSummary) => {
     setSelectedId(row.id);
     setSheetOpen(true);
+  };
+
+  const handleRangeChange = (nextRange: DateRange | undefined) => {
+    setRange(nextRange);
+    setPage(1);
+  };
+
+  const handleHazardFilter = (nextFilter: HazardFilter) => {
+    setHazardFilter(nextFilter);
+    setPage(1);
+  };
+
+  const handleSortKey = (nextSortKey: SortKey) => {
+    setSortKey(nextSortKey);
+    setPage(1);
+  };
+
+  const handleNameQuery = (nextNameQuery: string) => {
+    setNameQuery(nextNameQuery);
+    setPage(1);
   };
 
   const metaLine = useMemo(() => {
@@ -116,7 +148,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <DateRangePicker value={range} onChange={setRange} />
+            <DateRangePicker value={range} onChange={handleRangeChange} />
             <Button
               type="button"
               variant="secondary"
@@ -163,11 +195,11 @@ export default function Home() {
           <>
             <FiltersBar
               nameQuery={nameQuery}
-              onNameQuery={setNameQuery}
+              onNameQuery={handleNameQuery}
               hazardFilter={hazardFilter}
-              onHazardFilter={setHazardFilter}
+              onHazardFilter={handleHazardFilter}
               sortKey={sortKey}
-              onSortKey={setSortKey}
+              onSortKey={handleSortKey}
               shownCount={asteroids.length}
               totalCount={totalCount}
             />
@@ -195,10 +227,54 @@ export default function Home() {
               ) : asteroids.length === 0 ? (
                 <EmptyState />
               ) : (
-                <AsteroidMissionList
-                  asteroids={visibleAsteroids}
-                  onOpenDetails={handleRowClick}
-                />
+                <div className="space-y-4">
+                  <AsteroidMissionList
+                    asteroids={visibleAsteroids}
+                    onOpenDetails={handleRowClick}
+                  />
+
+                  {totalPages > 1 ? (
+                    <div className="flex flex-col gap-3 border-t border-zinc-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="text-sm text-zinc-600">
+                        Showing {(currentPage - 1) * ASTEROIDS_PER_PAGE + 1}-
+                        {Math.min(
+                          currentPage * ASTEROIDS_PER_PAGE,
+                          asteroids.length,
+                        )}{" "}
+                        of {asteroids.length}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          disabled={currentPage === 1}
+                          onClick={() =>
+                            setPage((value) => Math.max(1, value - 1))
+                          }
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                          Previous
+                        </Button>
+                        <span className="min-w-20 text-center text-sm font-medium text-zinc-700">
+                          {currentPage} / {totalPages}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          disabled={currentPage === totalPages}
+                          onClick={() =>
+                            setPage((value) => Math.min(totalPages, value + 1))
+                          }
+                        >
+                          Next
+                          <ChevronRight className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               )}
             </section>
           </>

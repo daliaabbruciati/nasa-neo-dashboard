@@ -60,7 +60,7 @@ export function DistanceOverTimeChart({
 
   return (
     <Card
-      className="h-full"
+      className="h-full min-w-0"
       style={{ background: "var(--background)", color: "var(--foreground)" }}
     >
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
@@ -80,13 +80,18 @@ export function DistanceOverTimeChart({
           Log Y axis
         </Button>
       </CardHeader>
-      <CardContent className="h-[300px] sm:h-[320px]">
+      <CardContent className="h-[300px] min-h-[300px] w-full min-w-0 sm:h-[320px]">
         {data.length === 0 ? (
           <p className="text-sm text-zinc-500">
             No chartable approaches in view.
           </p>
         ) : (
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            minWidth={0}
+            minHeight={300}
+          >
             <ScatterChart margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
               <CartesianGrid
                 strokeDasharray="3 3"

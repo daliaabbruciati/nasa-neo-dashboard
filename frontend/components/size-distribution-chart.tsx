@@ -51,7 +51,7 @@ export function SizeDistributionChart({
 
   return (
     <Card
-      className="h-full"
+      className="h-full min-w-0"
       style={{ background: "var(--background)", color: "var(--foreground)" }}
     >
       <CardHeader>
@@ -61,11 +61,16 @@ export function SizeDistributionChart({
           kilometers.
         </CardDescription>
       </CardHeader>
-      <CardContent className="h-[300px] sm:h-[320px]">
+      <CardContent className="h-75 min-h-75 w-full min-w-0 sm:h-80">
         {asteroids.length === 0 ? (
           <p className="text-sm text-zinc-500">No asteroids in view.</p>
         ) : (
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            minWidth={0}
+            minHeight={300}
+          >
             <BarChart
               data={data}
               margin={{ top: 8, right: 8, bottom: 8, left: 8 }}
