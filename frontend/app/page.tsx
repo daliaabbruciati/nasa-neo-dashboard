@@ -58,6 +58,7 @@ export default function Home() {
 
   const totalCount = raw?.asteroids.length ?? 0;
   const hazardousCount = raw?.meta.hazardous_count ?? 0;
+  const visibleAsteroids = asteroids.slice(0, 6);
 
   useEffect(() => {
     if (!error) return;
@@ -195,7 +196,7 @@ export default function Home() {
                 <EmptyState />
               ) : (
                 <AsteroidMissionList
-                  asteroids={asteroids}
+                  asteroids={visibleAsteroids}
                   onOpenDetails={handleRowClick}
                 />
               )}

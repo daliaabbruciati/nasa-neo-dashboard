@@ -173,7 +173,7 @@ export function AsteroidMissionList({ asteroids, onOpenDetails }: Props) {
                 </div>
                 <Button
                   className="mt-4 w-full"
-                  variant="secondary"
+                  variant="outline"
                   onClick={() => onOpenDetails(a)}
                 >
                   Details
