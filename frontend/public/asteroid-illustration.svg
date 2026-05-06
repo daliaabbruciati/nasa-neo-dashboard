@@ -1,0 +1,13 @@
+<svg width="220" height="180" viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rock" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(90 70) rotate(40) scale(130 120)">
+      <stop stop-color="#D9D3C7"/>
+      <stop offset="0.45" stop-color="#9D9589"/>
+      <stop offset="1" stop-color="#5C554D"/>
+    </radialGradient>
+  </defs>
+  <path d="M42 111L36 83L55 58L83 40L119 33L150 44L177 67L184 96L170 124L144 145L108 153L73 146L52 132L42 111Z" fill="url(#rock)"/>
+  <path d="M78 76L84 64L98 60L110 69L110 82L96 90L84 87L78 76Z" fill="#7D756A" fill-opacity="0.65"/>
+  <path d="M124 96L136 88L149 95L149 109L136 118L122 111L124 96Z" fill="#7A7268" fill-opacity="0.55"/>
+  <path d="M102 118L111 110L124 114L127 126L117 135L104 132L102 118Z" fill="#6D665D" fill-opacity="0.6"/>
+</svg>
