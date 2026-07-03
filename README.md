@@ -19,7 +19,7 @@ flowchart LR
 
 ```
 nasa-dashboard/
-├── backend/           # FastAPI + httpx NASA client + cache
+├── backend/           
 │   ├── app/
 │   │   ├── main.py
 │   │   ├── config.py
@@ -31,7 +31,7 @@ nasa-dashboard/
 │   │   └── routers/
 │   ├── tests/
 │   └── requirements.txt
-├── frontend/          # Next.js App Router + Recharts + Radix/shadcn-style UI
+├── frontend/ 
 │   ├── app/
 │   ├── components/
 │   ├── hooks/
